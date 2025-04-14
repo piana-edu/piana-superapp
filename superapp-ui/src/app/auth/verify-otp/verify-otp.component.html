@@ -1,0 +1,32 @@
+<main class="form-signin w-100 m-auto text-center">
+  <div>
+    <p>enter otp that send to {{sharedData.mobileToGetOtp$ | async}}</p>
+  </div>
+  <form [formGroup]="myForm" (ngSubmit)="onSubmit(myForm)">
+    <div class="form-floating">
+      <mat-form-field class="full-width">
+        <mat-label>OTP</mat-label>
+        <input matInput formControlName="otp" [type]="'text'" />
+        <button
+          style="margin-right: 6px"
+          matSuffix mat-raised-button
+          [disabled]="(timeRemaining$ | async) > 0"
+          (click)="resend($event)"
+          [attr.aria-label]="'OTP'"
+        >
+          RESEND
+<!--          <mat-icon>{{'visibility'}}</mat-icon>-->
+        </button>
+        <!--        <mat-hint>Errors appear instantly!</mat-hint>-->
+        @if (myForm.get('otp')?.invalid && (myForm.get('otp')?.dirty)) {
+          <mat-error>Please enter a valid 6-char OTP</mat-error>
+        }
+      </mat-form-field>
+    </div>
+    <div>
+      <span >{{ timeRemaining$ | async }} Seconds until resend</span>
+    </div>
+
+    <button class="btn btn-primary w-100 py-2" type="submit">Sign in</button>
+  </form>
+</main>

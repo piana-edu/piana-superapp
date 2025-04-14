@@ -1,0 +1,17 @@
+POST http://localhost:8080/api/v1/auth/request-otp
+content-type: application/json
+
+{
+  "mobile": "09128855402"
+}
+
+###
+
+POST http://localhost:8080/api/v1/auth/verify-otp
+content-type: application/json
+
+{
+  "otp": "1234"
+}
+
+###
