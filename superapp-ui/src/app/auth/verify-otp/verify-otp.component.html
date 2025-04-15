@@ -1,6 +1,6 @@
 <main class="form-signin w-100 m-auto text-center">
   <div>
-    <p>enter otp that send to {{sharedData.mobileToGetOtp$ | async}}</p>
+    <p>enter otp that send to {{(sharedData.mobileToGetOtp$ | async).mobile}}</p>
   </div>
   <form [formGroup]="myForm" (ngSubmit)="onSubmit(myForm)">
     <div class="form-floating">

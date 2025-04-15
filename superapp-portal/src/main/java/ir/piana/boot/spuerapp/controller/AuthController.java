@@ -46,12 +46,12 @@ public class AuthController {
             return ResponseEntity.badRequest().build();
         }
 
-        rateLimitService.checkSignInLimit(signInRequestDto.mobile);
-
         String captcha = (String) session.getAttribute("captcha-for-signin");
         if (signInRequestDto.captcha == null || !signInRequestDto.captcha.equalsIgnoreCase(captcha)) {
             APIErrorType.SignInProvidedCaptchaIsIncorrect.doThrows();
         }
+
+        rateLimitService.checkSignInLimit(signInRequestDto.mobile);
 
         try {
             //ToDo should be generate random code

@@ -7,7 +7,7 @@ import {ShowOnDirtyErrorStateMatcher} from '@angular/material/core';
 import {AsyncPipe, DatePipe, DOCUMENT} from '@angular/common';
 import {HttpClient} from '@angular/common/http';
 import {map, takeWhile, timer} from 'rxjs';
-import {SharedDataService} from '../../services/shared-data.service';
+import {SharedDataService} from '../../services/shared-data/shared-data.service';
 
 @Component({
   standalone: true,
@@ -32,6 +32,8 @@ export class VerifyOtpComponent {
     private fb: FormBuilder,
     public sharedData: SharedDataService,
     private httpClient: HttpClient) {
+    this.seconds = sharedData.mobileToGetOtp.expireAt - new Date().getTime();
+
     this.renderer.addClass(this.document.body, 'full-height');
     this.renderer.addClass(this.document.body, 'd-flex');
     this.renderer.addClass(this.document.body, 'align-items-center');

@@ -22,7 +22,7 @@
         <!--          <mat-icon>visibility</mat-icon>-->
         <!--        </button>-->
         <!--        <mat-hint>Errors appear instantly!</mat-hint>-->
-        @if (myForm.get('captcha')?.invalid && (myForm.get('captcha')?.dirty)) {
+        @if (myForm.get('captcha')?.invalid && (myForm.get('captcha')?.dirty || myForm.get('captcha')?.touched)) {
           <mat-error>Please enter a valid Captcha</mat-error>
         }
       </mat-form-field>

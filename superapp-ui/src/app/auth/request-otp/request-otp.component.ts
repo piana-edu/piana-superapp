@@ -1,27 +1,31 @@
-import {Component, Inject, OnInit, Renderer2} from '@angular/core';
+import {Component, inject, Inject, OnInit, Renderer2} from '@angular/core';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {ShowOnDirtyErrorStateMatcher} from '@angular/material/core';
 import {AsyncPipe, DatePipe, DOCUMENT} from '@angular/common';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {MatInputModule} from '@angular/material/input';
 import {Router} from '@angular/router';
-import {SharedDataService} from '../../services/shared-data.service';
+import {SharedDataService} from '../../services/shared-data/shared-data.service';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 import {MatTooltipModule} from '@angular/material/tooltip';
+import {LocalStorageService} from '../../services/local-storage/local-storage.service';
+import {MatSnackBar, MatSnackBarModule} from '@angular/material/snack-bar';
+import {ShowMessageService} from '../../common/show-message/show-message.service';
 
 @Component({
   standalone: true,
   selector: 'app-request-otp',
     imports: [
         ReactiveFormsModule,
-        MatInputModule, MatButtonModule, MatIconModule, MatTooltipModule,
+        MatInputModule, MatButtonModule, MatIconModule, MatTooltipModule, MatSnackBarModule,
         AsyncPipe, DatePipe
     ],
   templateUrl: './request-otp.component.html',
   styleUrl: './request-otp.component.css'
 })
 export class RequestOtpComponent implements OnInit {
+  private _snackBar = inject(MatSnackBar);
   myForm: FormGroup;
   matcher = new ShowOnDirtyErrorStateMatcher();
 
@@ -31,6 +35,8 @@ export class RequestOtpComponent implements OnInit {
     private router: Router,
     private fb: FormBuilder,
     private sharedData: SharedDataService,
+    private localStorageService: LocalStorageService,
+    private showMessageService: ShowMessageService,
     private httpClient: HttpClient) {
     this.renderer.addClass(this.document.body, 'full-height');
     this.renderer.addClass(this.document.body, 'd-flex');
@@ -64,6 +70,12 @@ export class RequestOtpComponent implements OnInit {
   time: number = new Date().getTime();
 
   onSubmit(form: FormGroup) {
+    console.log(form.invalid, form.dirty)
+    if (form.invalid) {
+      this.showMessageService.showError(
+        'All fields must be filled.', 5);
+      return;
+    }
     if (form.valid) {
       this.httpClient.post("api/v1/auth/request-otp", {mobile: form.value.mobile, captcha: form.value.captcha},
         {
