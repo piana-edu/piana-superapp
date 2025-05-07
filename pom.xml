@@ -24,6 +24,7 @@
 	<modules>
 		<module>superapp-captcha</module>
 		<module>superapp-common</module>
+		<module>superapp-auth</module>
 		<module>superapp-portal</module>
 	</modules>
 

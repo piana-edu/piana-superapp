@@ -1,0 +1,33 @@
+<main class="form-signin w-100 m-auto text-center">
+  <form [formGroup]="myForm" (ngSubmit)="onSubmit(myForm)">
+    <div class="form-floating">
+      <mat-form-field class="full-width">
+        <mat-label>Mobile</mat-label>
+        <input type="email" matInput formControlName="mobile" placeholder="09*********">
+        <!--        <mat-hint>Errors appear instantly!</mat-hint>-->
+        @if (myForm.get('mobile')?.invalid && (myForm.get('mobile')?.dirty || myForm.get('mobile')?.touched)) {
+          <mat-error>Please enter a valid mobile</mat-error>
+        }
+      </mat-form-field>
+    </div>
+    <div class="form-floating">
+      <mat-form-field class="full-width">
+        <mat-label>OTP</mat-label>
+        <input matInput formControlName="captcha" [type]="'text'"/>
+        <button matSuffix [style.background-image]="'url(api/v1/auth/captcha?for=signin&time=' + time + ')'"
+                matTooltip="change captcha"
+                style="width: 130px; height: 42px"
+                (click)="resendCaptcha($event)"></button>
+        <!--        <button mat-icon-button matSuffix>-->
+        <!--          <mat-icon>visibility</mat-icon>-->
+        <!--        </button>-->
+        <!--        <mat-hint>Errors appear instantly!</mat-hint>-->
+        @if (myForm.get('captcha')?.invalid && (myForm.get('captcha')?.dirty || myForm.get('captcha')?.touched)) {
+          <mat-error>Please enter a valid Captcha</mat-error>
+        }
+      </mat-form-field>
+    </div>
+
+    <button class="btn btn-primary w-100 py-2" type="submit">Sign in</button>
+  </form>
+</main>

@@ -1,0 +1,73 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: piana-superapp-auth
+
+  threads:
+    virtual:
+      enabled: true
+
+  datasource:
+    url: 'jdbc:postgresql://localhost:15433/piana_superapp_db'
+    username: 'user'
+    password: 'pass'
+    driverClassName: 'org.postgresql.Driver'
+    hikari:
+      maximum-pool-size: 10
+  jpa:
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        default_schema: auth
+
+
+  flyway:
+    url: 'jdbc:postgresql://localhost:15433/piana_superapp_db'
+    user: 'user'
+    password: 'pass'
+    driverClassName: 'org.postgresql.Driver'
+    schemas: auth
+    locations: classpath:db/migration/auth
+
+  data:
+    redis:
+      sentinel:
+        master: superapp-redis-master
+        nodes:
+          - 'localhost:26379'
+          - 'localhost:26380'
+          - 'localhost:26381'
+
+  session:
+    store-type: redis
+    redis:
+      namespace: spring:session
+    timeout: 3600
+
+  web:
+    resources:
+      static-locations: classpath:/auth-ui/browser
+  freemarker:
+    enabled: true
+    cache: false
+    # Content Type
+    content-type: text/html
+    charset: utf-8
+    suffix: .ftl
+    request-context-attribute: request
+    expose-request-attributes: false
+    expose-session-attributes: false
+    allow-request-override: true
+    allow-session-override: true
+    expose-spring-macro-helpers: true
+    check-template-location: true
+    prefer-file-system-access: true
+    template-loader-path:
+      - classpath:/templates/
+    settings:
+      datetime_format: yyyy-MM-dd HH:mm:ss
+      template_update_delay: 30m
+      default_encoding: utf-8

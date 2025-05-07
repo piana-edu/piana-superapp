@@ -1,0 +1,16 @@
+<div class="container-fluid">
+  <div class="row justify-content-between">
+    <div class="col-11">
+      {{ data['message'] }}
+    </div>
+    <div class="col-1">
+      @if (data['action'] === 'info') {
+        <mat-icon [style.color]="'yellow'">info</mat-icon>
+      } @else if (data['action'] === 'error') {
+        <mat-icon [style.color]="'red'">error</mat-icon>
+      } @else {
+        <mat-icon [style.color]="'green'">check</mat-icon>
+      }
+    </div>
+  </div>
+</div>

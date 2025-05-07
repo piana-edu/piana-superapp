@@ -46,6 +46,17 @@ build/
 /superapp-ui/npm-debug.log
 /superapp-ui/yarn-error.log
 
+/**/dist
+/**/tmp
+/**/out-tsc
+/**/bazel-out
+/**/node_modules
+/**/.angular
+/**/.vscode
+/**/.editorconfig
+/**/npm-debug.log
+/**/yarn-error.log
+
 
 ###angular###
 # See https://docs.github.com/get-started/getting-started-with-git/ignoring-files for more about ignoring files.
